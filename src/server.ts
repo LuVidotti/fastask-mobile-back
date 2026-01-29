@@ -1,7 +1,12 @@
 import Fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import * as dotenv from "dotenv";
-dotenv.config();
+
+// Só carrega .env em desenvolvimento
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+
 import { usuriosRoutes } from "./routes/usuarios";
 import { tarefasRoutes } from "./routes/tarefas";
 import cors from "@fastify/cors";
@@ -11,7 +16,7 @@ const fastify = Fastify({
 });
 
 fastify.register(fastifyJwt, {
-  secret: process.env.SECRET,
+  secret: process.env.SECRET as string,
 });
 
 fastify.register(cors, {
