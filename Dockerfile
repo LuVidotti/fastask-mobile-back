@@ -51,5 +51,5 @@ EXPOSE 3333
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s \
   CMD node -e "require('http').get('http://localhost:3333/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-# Start the application
-CMD ["npm", "start"]
+# Start the application directly with node (not npm)
+CMD ["node", "dist/src/server.js"]
