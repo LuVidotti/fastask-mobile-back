@@ -18,3 +18,10 @@ cmd = "node dist/server.js"
 
 [variables]
 NODE_ENV = "production"
+
+[healthcheck]
+cmd = "curl -f http://localhost:3333/health || exit 1"
+interval = "30s"
+timeout = "5s"
+retries = 3
+start_period = "10s"

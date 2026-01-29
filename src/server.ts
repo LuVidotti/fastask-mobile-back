@@ -34,6 +34,11 @@ fastify.get("/", function (request, reply) {
   reply.send({ hello: "world" });
 });
 
+//rota de health check
+fastify.get("/health", function (request, reply) {
+  reply.send({ status: "ok" });
+});
+
 fastify.listen(
   { port: Number(process.env.PORT) || 3333, host: "0.0.0.0" },
   function (err, address) {
@@ -50,7 +55,13 @@ const signals = ["SIGINT", "SIGTERM"];
 signals.forEach((signal) => {
   process.on(signal, async () => {
     console.log(`Received ${signal}, closing server gracefully...`);
-    await fastify.close();
-    process.exit(0);
+    try {
+      await fastify.close();
+      console.log("Server closed successfully");
+    } catch (err) {
+      console.error("Error closing server:", err);
+    } finally {
+      process.exit(0);
+    }
   });
 });
