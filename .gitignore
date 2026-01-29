@@ -1,5 +1,6 @@
 # Build
 dist/
+src/generated/
 
 # Dependências
 node_modules/
@@ -22,4 +23,3 @@ pnpm-debug.log*
 .vscode/
 .idea/
 
-/prisma/generated/prisma

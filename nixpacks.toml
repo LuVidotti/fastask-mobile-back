@@ -9,9 +9,8 @@ cmds = ["npm ci"]
 [phases.build]
 cmds = [
     "npm run clean",
-    "npx tsc",
     "npx prisma generate",
-    "cp -r src/generated dist/generated || mkdir -p dist/generated && cp -r src/generated/* dist/generated/"
+    "npx tsc"
 ]
 
 [start]

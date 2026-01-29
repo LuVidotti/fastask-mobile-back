@@ -21,11 +21,10 @@
     "typescript": "^5.9.2"
   },
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "npm run clean && tsc && prisma generate && npm run copy:prisma",
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "build": "npm run clean && prisma generate && tsc",
     "start": "node dist/server.js",
     "clean": "npx rimraf dist",
-    "copy:prisma": "cp -r src/generated dist/generated || xcopy src\\generated dist\\generated /E /I /Y",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push"
   },
