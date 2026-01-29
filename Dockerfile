@@ -9,6 +9,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm ci
 
+# Copy tsconfig for build
+COPY tsconfig.json ./
+
 # Copy prisma schema
 COPY prisma ./prisma
 
@@ -16,10 +19,13 @@ COPY prisma ./prisma
 RUN npx prisma generate
 
 # Copy source code
-COPY . .
+COPY src ./src
 
 # Build the application
 RUN npm run build
+
+# Verify build output
+RUN ls -la dist/
 
 # Production stage
 FROM node:20-alpine
@@ -32,11 +38,10 @@ COPY package*.json ./
 # Install production dependencies only
 RUN npm ci --only=production
 
-# Copy prisma schema and generated client
-COPY prisma ./prisma
-COPY --from=builder /app/prisma/generated ./prisma/generated
+# Copy prisma schema and generated client from builder
+COPY --from=builder /app/prisma ./prisma
 
-# Copy built application
+# Copy built application from builder
 COPY --from=builder /app/dist ./dist
 
 # Expose port
