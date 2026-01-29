@@ -35,8 +35,10 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --omit=dev
+# Install production dependencies only and clean cache
+RUN npm ci --omit=dev && \
+    npm cache clean --force && \
+    rm -rf /tmp/* /var/cache/apk/*
 
 # Copy prisma schema and generated client from builder
 COPY --from=builder /app/prisma ./prisma
