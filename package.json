@@ -1,4 +1,7 @@
 {
+  "name": "fastask-back",
+  "version": "1.0.0",
+  "main": "dist/server.js",
   "dependencies": {
     "@fastify/cors": "^11.2.0",
     "@fastify/jwt": "^10.0.0",
@@ -9,18 +12,24 @@
     "pg": "^8.17.2"
   },
   "devDependencies": {
-    "@types/node": "^25.1.0",
+    "@types/node": "^24.5.2",
     "@types/pg": "^8.16.0",
     "dotenv": "^17.2.3",
     "prisma": "^7.3.0",
-    "ts-node-dev": "^2.0.0",
-    "tsx": "^4.21.0"
+    "rimraf": "^5.0.5",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
   },
   "scripts": {
-    "dev": "node -r dotenv/config --import tsx src/server.ts",
-    "build": "prisma generate && tsc",
-    "start": "node dist/src/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "npm run clean && tsc && prisma generate && npm run copy:prisma",
+    "start": "node dist/server.js",
+    "clean": "npx rimraf dist",
+    "copy:prisma": "cp -r src/generated dist/generated || xcopy src\\generated dist\\generated /E /I /Y",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
