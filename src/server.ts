@@ -40,7 +40,7 @@ fastify.get("/health", function (request, reply) {
 });
 
 fastify.listen(
-  { port: Number(process.env.PORT) || 3333, host: "0.0.0.0" },
+  { port: Number(process.env.PORT), host: "0.0.0.0" },
   function (err, address) {
     if (err) {
       fastify.log.error(err);

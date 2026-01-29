@@ -1,27 +1,22 @@
-# Nixpacks Configuration for Fastask Backend
-
 [phases.setup]
-nixPkgs = ["nodejs_20"]
+nixPkgs = ["nodejs_20", "curl"]
 
 [phases.install]
 cmds = ["npm ci"]
 
 [phases.build]
 cmds = [
-    "npm run clean",
-    "npx prisma generate",
-    "npx tsc"
+  "npm run clean",
+  "npx prisma generate",
+  "npx tsc"
 ]
 
 [start]
 cmd = "node dist/server.js"
 
-[variables]
-NODE_ENV = "production"
-
 [healthcheck]
-cmd = "curl -f http://localhost:$PORT/health || exit 1"
+cmd = "curl -f http://localhost:$PORT/health"
 interval = "30s"
 timeout = "5s"
 retries = 3
-start_period = "20s"
+start_period = "30s"
