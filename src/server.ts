@@ -1,12 +1,5 @@
 import Fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
-import * as dotenv from "dotenv";
-
-// Só carrega .env em desenvolvimento
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
-}
-
 import { usuriosRoutes } from "./routes/usuarios";
 import { tarefasRoutes } from "./routes/tarefas";
 import cors from "@fastify/cors";
