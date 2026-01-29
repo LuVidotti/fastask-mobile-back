@@ -46,3 +46,13 @@ fastify.listen(
     console.log(`Server listening on ${address}`);
   },
 );
+
+// Graceful shutdown
+const signals = ["SIGINT", "SIGTERM"];
+signals.forEach((signal) => {
+  process.on(signal, async () => {
+    console.log(`Received ${signal}, closing server gracefully...`);
+    await fastify.close();
+    process.exit(0);
+  });
+});

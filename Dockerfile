@@ -47,5 +47,9 @@ COPY --from=builder /app/dist ./dist
 # Expose port
 EXPOSE 3333
 
+# Add health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s \
+  CMD node -e "require('http').get('http://localhost:3333/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
 # Start the application
 CMD ["npm", "start"]
